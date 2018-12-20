@@ -13,8 +13,7 @@ def moviesearch():
     director = request.args.get("director")
     actor = request.args.get("actor")
     genre = request.args.get("genre")
-
-    #movie = dbsearch function
+    #movie = msearch()
 
     movie = None
     return movie
