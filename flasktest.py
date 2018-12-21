@@ -4,6 +4,7 @@ from flask import request
 import time
 import json
 import redis_part as r
+import genres_parser as gp
 import influ as infx
 app = Flask(__name__)
 
@@ -29,7 +30,7 @@ def moviesearch():
     begint = time.time()
     movie = r.msearch(genre=genre,begintime=startyear,endtime=endyear,moviename=partmoviename,director=director,actor=actor)
     endtime1 = time.time()
-    #infx.msearch(starttime,endtime=endtime,actor=actor,director=director,genre=genre,title=partmoviename,review=None)
+    infx.msearch(starttime,endtime=endtime,actor=actor,director=director,genre=genre,title=partmoviename,review=None)
     endtime2 = time.time()
     # n4j.msearch()
     endtime3 = time.time()
@@ -37,7 +38,7 @@ def moviesearch():
     endtime4 = time.time()
     limit = 0
     if len(movie.keys()) > 20000:
-        limit = 100
+        limit = 500
     newmovie={}
     for key in movie.keys():
         if(key!="length"):
@@ -64,7 +65,7 @@ def collaboration():
     begint = time.time()
     relationships1 = r.bsearch(actor,director)
     endtime1 = time.time()
-    #infx.bsearch(director,actor)
+    infx.bsearch(director,actor)
     endtime2 = time.time()
     #n4j.bsearch(director,actor)
     endtime3 = time.time()
@@ -87,7 +88,6 @@ def collaboration():
 
 
 
-
     relationships["len"] = num
     relationships["redis"] = round(endtime1 - begint,2)
     relationships["influxdb"] = round(endtime2 - endtime1,2)
@@ -98,7 +98,31 @@ def collaboration():
 
     return relationshipsjson
 
+@app.route('/diagram')
+def diagram():
+    finaljson = {}
+    diagramdata = []
+    diagramlabels = []
+    diagramgenredic = gp.genres_parser()
+    for genre in diagramgenredic.keys():
+        diagramdata.append(diagramgenredic[genre])
+        diagramlabels.append(genre)
 
+    finaljson["diagramlabels"] = diagramlabels
+    finaljson["diagramdata"] = diagramdata
+
+    chart2=infx.dividebyyear()
+    chart2data=[]
+    chart2labels=[]
+
+    for year in chart2.keys():
+        chart2data.append(chart2[year])
+        chart2labels.append(year)
+
+    finaljson["chart2data"] = chart2data
+    finaljson["chart2labels"] = chart2labels
+    finaljson = json.dumps(finaljson)
+    return finaljson
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

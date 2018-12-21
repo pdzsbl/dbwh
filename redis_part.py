@@ -20,8 +20,8 @@ def list_parser(raw_list):
 def list_to_str(raw_list):
     string = ''
     for value in raw_list:
-        string += (value + ' ')
-    return string.strip()
+        string += (value + ',')
+    return string.strip().strip(",")
 
 def msearch(genre, begintime, endtime, moviename, actor, director):
     """
@@ -38,8 +38,8 @@ def msearch(genre, begintime, endtime, moviename, actor, director):
         movie = db.hgetall(key)
         new_movie = {}
         # Director
+        director_list = list_parser(movie['director'])
         if director == '':
-            director_list = list_parser(movie['director'])
             new_movie['director'] = list_to_str(director_list)
         else:
             if director not in director_list:
@@ -47,8 +47,9 @@ def msearch(genre, begintime, endtime, moviename, actor, director):
             else:
                 new_movie['director'] = director
         # Actor
+
+        actor_list = list_parser(movie['actor'])
         if actor == '':
-            actor_list = list_parser(movie['actor'])
             new_movie['actor'] = list_to_str(actor_list)
         else:
             if actor not in actor_list:
@@ -164,4 +165,4 @@ def bsearch(actor, director):
 
 if __name__ == '__main__':
 
-    print(bsearch("Inger Nilsson",""))
+    print(msearch(actor="Akira Kamiya",genre="",begintime="",endtime="",moviename="",director=""))

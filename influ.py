@@ -1,5 +1,5 @@
 import influxdb as idb
-
+import redis_part as rs
 import re
 vhs = re.compile("(.+?)(vhs|VHS)")
 #print(vhs.findall("Shark Skin Man and Peach Hip Girl")[0][0])
@@ -14,7 +14,7 @@ monthg = {"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,
 
 def datedeal(date):
     if(date == "None"):
-        return "1800-1-1-T00:00:00Z"
+        return "1800-1-1T00:00:00Z"
     sp = date.split(" ")#['Mon', 'Nov', '05', '2018', '00:00:00', 'GMT+0800', '(China', 'Standard', 'Time)']
     month = str(monthg[sp[1]])
     day = sp[2].replace(",","")
@@ -29,7 +29,7 @@ def titledeal(t):
     else:
         return vhs.findall(t)[0][0].strip()
 
-def msearch(begintime=None,endtime=None,actor=None,director=None,genre=None,title=None,review=None):
+def msearch(begintime="",endtime="",actor="",director="",genre="",title="",review=None):
     client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
     qstr = "select * from dbwarehouse where "
     if(begintime != "" and endtime != ""):
@@ -47,38 +47,47 @@ def msearch(begintime=None,endtime=None,actor=None,director=None,genre=None,titl
 
     for i in result:
         new = []
-        if (actor != ""):
+        if (actor == ""):
                 for j in i:
                     try:
-                        j["actor"] = eval(j["actor"])
+                        j["actor"] = rs.list_to_str(rs.list_parser(j["actor"]))
                     except:
                         continue
-                    for x in j["actor"]:
-                        if(actor == x):
-                            new.append(j)
+                    new.append(j)
 
         else:
-            new = i
+            for j in i:
+
+                if actor in j["actor"]:
+                    j["actor"]=actor
+                    new.append(j)
+
         newx = []
-        if (director != ""):
+        if (director == ""):
                 for j in new:
                     try:
-                        j["director"] = eval(j["director"])
+                        j["director"] = rs.list_to_str(rs.list_parser(j["director"]))
                     except:
                         continue
-                    for x in j["director"]:
-                        if(director == x):
-                            newx.append(j)
+                    newx.append(j)
         else:
-            newx = new
-        return newx
+            for j in i:
+                if director in j["director"]:
+                    j["director"]=director
+                    newx.append(j)
+        newdic = {"length":len(newx)}
+        num = 0
+        for movie in newx:
+            newdic[num] = movie
+            num+=1
+        return newdic
 
 """
 for i in msearch(genre="Japanese",actor="Chikao Ohtsuka"):
     print("nnnnn",i)
 """
 
-def bsearch(actor, director):
+def bsearch(actor="", director=""):
     client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
     qstr = "select * from dbwarehouse"
     result = client.query(qstr)
@@ -86,7 +95,27 @@ def bsearch(actor, director):
     director_actor_list = []
 
     if actor =="" and director == "":
-        k = msearch("","","","",'','')
+        dict = {}
+        for i in result:
+
+            for j in i:
+                try:
+                    j["actor"] = eval(j["actor"])
+                except:
+                    continue
+                try:
+                    j["director"] = eval(j["director"])
+                except:
+                    continue
+                for key_actor in j["actor"]:
+                    if key_actor not in dict:
+                        dict[key_actor] = {}
+                    for key_director in j["director"]:
+                        if key_director not in dict[key_actor]:
+                            dict[key_actor] = {key_director: 1}
+                        else:
+                            dict[key_actor][key_director] += 1
+
 
     elif(director==""):
         for i in result:
@@ -206,5 +235,30 @@ def bsearch(actor, director):
         aname = actor
         k = msearch(director=director,actor=actor)
 
-        return {"len":"1","1":{"actor":aname,"director":dname,"times":len(k)}}
+        return {"1":{"actor":aname,"director":dname,"times":len(k)}}
 
+def dividebyyear():
+    year = 0
+    client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
+    returndic = {"<1980": 0}
+    for year in range(1900,2019):
+        qstr = "select count(*) from dbwarehouse WHERE time >= '"+str(year)+"-01-01T00:00:00Z' and time <= '"+str(year)+"-12-31T00:00:00Z' tz('Asia/Shanghai');"
+        result = client.query(qstr)
+        for i in result:
+            #<1980
+            if(year<1980):
+                returndic["<1980"]+=int(i[0]['count_id'])
+            else:
+                returndic[str(year)]=int(i[0]['count_id'])
+    return returndic
+"""
+def dividebymonth():
+    basicdic = {}
+    for month in range(1,13):
+        basicdic[str(month)]=0
+        for year in range(1900, 2019):
+            qstr = "select count(*) from dbwarehouse WHERE time >= '"+str(year)+"-1-01T00:00:00Z' and time < '"+str(year)+"-12-31T00:00:00Z' tz('Asia/Shanghai');"
+
+"""
+#print(msearch(actor='Akira Kamiya'))
+#dividebyyear()
