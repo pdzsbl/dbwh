@@ -1,5 +1,6 @@
 import influxdb as idb
 import redis_part as rs
+import time
 import re
 vhs = re.compile("(.+?)(vhs|VHS)")
 #print(vhs.findall("Shark Skin Man and Peach Hip Girl")[0][0])
@@ -30,6 +31,7 @@ def titledeal(t):
         return vhs.findall(t)[0][0].strip()
 
 def msearch(begintime="",endtime="",actor="",director="",genre="",title="",review=None):
+    bgt=time.time()
     client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
     qstr = "select * from dbwarehouse where "
     if(begintime != "" and endtime != ""):
@@ -44,7 +46,7 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
     #print(qstr)
     result = client.query(qstr)
 
-
+    print("influx result",begintime,endtime,actor,director,genre,title)
     for i in result:
         new = []
         if (actor == ""):
@@ -80,14 +82,11 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
         for movie in newx:
             newdic[num] = movie
             num+=1
-        return newdic
+        return [time.time()-bgt,newdic]
 
-"""
-for i in msearch(genre="Japanese",actor="Chikao Ohtsuka"):
-    print("nnnnn",i)
-"""
 
 def bsearch(actor="", director=""):
+    bgt = time.time()
     client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
     qstr = "select * from dbwarehouse"
     result = client.query(qstr)
@@ -116,7 +115,7 @@ def bsearch(actor="", director=""):
                         else:
                             dict[key_actor][key_director] += 1
 
-
+        return[time.time()-bgt,None]
     elif(director==""):
         for i in result:
             new = []
@@ -148,7 +147,8 @@ def bsearch(actor="", director=""):
             for dname in dict.keys():
                 bina = {"actor":actor,"director":dname,"times":dict[dname]}
                 finaldict[str(nm)] = bina
-            return finaldict
+
+            return [time.time()-bgt,finaldict]
 
 
     elif(actor==""):
@@ -181,7 +181,8 @@ def bsearch(actor="", director=""):
             for aname in dict.keys():
                 bina = {"actor": aname, "director": director, "times": dict[aname]}
                 finaldict[str(nm)] = bina
-            return finaldict
+
+            return [time.time()-bgt,finaldict]
         '''
         if(identity1 == "actor" and identity2 == "actor"):
             for i in result:
@@ -235,7 +236,7 @@ def bsearch(actor="", director=""):
         aname = actor
         k = msearch(director=director,actor=actor)
 
-        return {"1":{"actor":aname,"director":dname,"times":len(k)}}
+        return [time.time()-bgt,{"1":{"actor":aname,"director":dname,"times":len(k)}}]
 
 def dividebyyear():
     year = 0
@@ -260,5 +261,6 @@ def dividebymonth():
             qstr = "select count(*) from dbwarehouse WHERE time >= '"+str(year)+"-1-01T00:00:00Z' and time < '"+str(year)+"-12-31T00:00:00Z' tz('Asia/Shanghai');"
 
 """
-#print(msearch(actor='Akira Kamiya'))
 #dividebyyear()
+if __name__ == '__main__':
+    print(msearch(actor='Akira Kamiya', genre="Japanese"))

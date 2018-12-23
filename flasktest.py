@@ -6,7 +6,14 @@ import json
 import redis_part as r
 import genres_parser as gp
 import influ as infx
+from multiprocessing import Process,Pool
+import os
+import subprocess
+import random
+import GraphQuery as n4j
+
 app = Flask(__name__)
+
 
 
 @app.route('/moviesearch')
@@ -27,15 +34,32 @@ def moviesearch():
     actor = request.args.get("actor")
     genre = request.args.get("genre")
     movie = {}
+
+    sfp = Pool(4)#开启一个容量为4的进程池
+
+
     begint = time.time()
-    movie = r.msearch(genre=genre,begintime=startyear,endtime=endyear,moviename=partmoviename,director=director,actor=actor)
+    redisproc = sfp.apply_async(r.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
+    #movie = r.msearch(genre=genre,begintime=startyear,endtime=endyear,moviename=partmoviename,director=director,actor=actor)
     endtime1 = time.time()
-    infx.msearch(starttime,endtime=endtime,actor=actor,director=director,genre=genre,title=partmoviename,review=None)
+
+    infxproc = sfp.apply_async(infx.msearch, args=(starttime, endtime,actor,director,genre,partmoviename))
+    #infx.msearch(starttime,endtime=endtime,actor=actor,director=director,genre=genre,title=partmoviename,review=None)
     endtime2 = time.time()
+
     # n4j.msearch()
+    n4jproc = sfp.apply_async(n4j.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
     endtime3 = time.time()
+
     # all.msearch()
     endtime4 = time.time()
+
+    sfp.close()
+    sfp.join()#阻断主进程直到子进程执行完毕
+    [redistime,movie] = redisproc.get()#返回子进程的结果
+    [influxtime,none] = infxproc.get()
+    [n4jtime,none] = n4jproc.get()
+
     limit = 0
     if len(movie.keys()) > 20000:
         limit = 500
@@ -45,9 +69,9 @@ def moviesearch():
             if(int(movie[key]["reviewnum"])>=limit):
                 newmovie[key]=movie[key]
     newmovie["length"] = len(movie.keys())
-    newmovie["redis"] = endtime1 - begint
-    newmovie["influxdb"] = endtime2 - endtime1
-    newmovie["neo4j"] = endtime3 - endtime2
+    newmovie["redis"] = round(redistime,2)
+    newmovie["influxdb"] = round(influxtime,2)
+    newmovie["neo4j"] = round(n4jtime,2)
     newmovie["zonghedb"] = endtime4 - endtime4
     moviejson = json.dumps(newmovie)
 
@@ -62,15 +86,31 @@ def collaboration():
     relationships1 = {}
     relationships = {}
 
+    clp=Pool(4)
+
     begint = time.time()
-    relationships1 = r.bsearch(actor,director)
+    redisproc = clp.apply_async(r.bsearch, args=(actor,director))
+    #relationships1 = r.bsearch(actor,director)
     endtime1 = time.time()
-    infx.bsearch(director,actor)
+
+
+    infxproc = clp.apply_async(infx.bsearch, args=(director,actor))
+    #infx.bsearch(director,actor)
     endtime2 = time.time()
+
+    n4jproc = clp.apply_async(n4j.bsearch, args=(actor,director))
     #n4j.bsearch(director,actor)
     endtime3 = time.time()
+
     #all.bsearch(director,actor)
     endtime4 = time.time()
+
+    clp.close()
+    clp.join()  # 阻断主进程直到子进程执行完毕
+
+    [redistime,relationships1] = redisproc.get()#返回子进程的结果
+    [influxtime,none] = infxproc.get()
+    [n4jtime, none] = n4jproc.get()
 
     limit = 0
     if len(relationships1.keys())>20000:
@@ -85,12 +125,9 @@ def collaboration():
                 relationships[num] = json.dumps({"director": j, "actor": i, "times": n})
                 num+=1
 
-
-
-
     relationships["len"] = num
-    relationships["redis"] = round(endtime1 - begint,2)
-    relationships["influxdb"] = round(endtime2 - endtime1,2)
+    relationships["redis"] = round(redistime,2)
+    relationships["influxdb"] = round(influxtime,2)
     relationships["neo4j"] = round(endtime3 - endtime2,2)
     relationships["zonghedb"] = round(endtime4 - endtime3,2)
     print(num)

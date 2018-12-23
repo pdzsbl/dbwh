@@ -1,5 +1,5 @@
 import redis
-
+import time
 MONTH = {"January": 1, "February": 2, "March": 3, "April": 4, "May": 5, "June": 6, "July": 7, "August": 8,
          "September": 9, "October": 10, "November": 11, "December": 12}
 
@@ -24,6 +24,7 @@ def list_to_str(raw_list):
     return string.strip().strip(",")
 
 def msearch(genre, begintime, endtime, moviename, actor, director):
+    bgt = time.time()
     """
         All params is string
     """
@@ -90,9 +91,11 @@ def msearch(genre, begintime, endtime, moviename, actor, director):
         new_movie['reviewnum'] = movie['review']
         result[result['length']] = new_movie
         result['length'] += 1
-    return result
+
+    return [time.time()-bgt,result]
 
 def bsearch(actor, director):
+    bgt = time.time()
     db = redis.StrictRedis(host='127.0.0.1', port=6379, decode_responses=True)
 
     relation = {}
@@ -108,7 +111,8 @@ def bsearch(actor, director):
             actor_list = list_parser(movie['actor'])
             if actor in actor_list and director in director_list:
                 relation[actor][director] += 1
-        return relation
+
+        return [time.time()-bgt,relation]
     elif actor == '' and director == '':
         for key in db.keys():
             movie_id = key[-10:]
@@ -126,7 +130,7 @@ def bsearch(actor, director):
                         relation[key_actor] = {key_director: 1}
                     else:
                         relation[key_actor][key_director] += 1
-        return relation
+        return [time.time()-bgt,relation]
     elif actor == '':
         for key in db.keys():
             movie_id = key[-10:]
@@ -143,7 +147,9 @@ def bsearch(actor, director):
                         relation[key_actor][director] += 1
                     else:
                         relation[key_actor] = {director: 1}
-        return relation
+
+
+        return [time.time()-bgt,relation]
     else: # Only Actor
         relation[actor] = {}
         for key in db.keys():
@@ -161,8 +167,8 @@ def bsearch(actor, director):
                         relation[actor][key_director] += 1
                     else:
                         relation[actor] = {key_director: 1}
-        return relation
+
+        return [time.time()-bgt,relation]
 
 if __name__ == '__main__':
-
     print(msearch(actor="Akira Kamiya",genre="",begintime="",endtime="",moviename="",director=""))
