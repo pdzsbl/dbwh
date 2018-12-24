@@ -11,6 +11,24 @@ import os
 import subprocess
 import random
 import GraphQuery as n4j
+import threading
+import all
+
+class MyThread(threading.Thread):
+
+    def __init__(self,func,args=()):
+        super(MyThread,self).__init__()
+        self.func = func
+        self.args = args
+
+    def run(self):
+        self.result = self.func(*self.args)
+
+    def get_result(self):
+        try:
+            return self.result  # 如果子线程不使用join方法，此处可能会报没有self.result的错误
+        except Exception:
+            return None
 
 app = Flask(__name__)
 
@@ -35,31 +53,51 @@ def moviesearch():
     genre = request.args.get("genre")
     movie = {}
 
-    sfp = Pool(4)#开启一个容量为4的进程池
 
+    #逻辑：循环等待10s，对于每个线程，判断其是否执行完毕，完毕的话，正常返回，否则返回10.0s
 
     begint = time.time()
-    redisproc = sfp.apply_async(r.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
+    threadlist = []
+    redisproc = MyThread(r.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
     #movie = r.msearch(genre=genre,begintime=startyear,endtime=endyear,moviename=partmoviename,director=director,actor=actor)
-    endtime1 = time.time()
+    redisproc.start()
 
-    infxproc = sfp.apply_async(infx.msearch, args=(starttime, endtime,actor,director,genre,partmoviename))
+    infxproc = MyThread(infx.msearch, args=(starttime, endtime,actor,director,genre,partmoviename))
     #infx.msearch(starttime,endtime=endtime,actor=actor,director=director,genre=genre,title=partmoviename,review=None)
-    endtime2 = time.time()
+    infxproc.start()
 
     # n4j.msearch()
-    n4jproc = sfp.apply_async(n4j.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
-    endtime3 = time.time()
+    n4jproc = MyThread(n4j.msearch, args=(genre, startyear,endyear,partmoviename,director,actor))
+    n4jproc.start()
 
     # all.msearch()
+    allproc = MyThread(all.msearch, args=(genre, startyear, endyear, partmoviename, director, actor))
+    allproc.start()
     endtime4 = time.time()
 
-    sfp.close()
-    sfp.join()#阻断主进程直到子进程执行完毕
-    [redistime,movie] = redisproc.get()#返回子进程的结果
-    [influxtime,none] = infxproc.get()
-    [n4jtime,none] = n4jproc.get()
+    threadlist.append(redisproc)
+    threadlist.append(infxproc)
+    threadlist.append(n4jproc)
+    threadlist.append(allproc)
 
+    result=[[10.0,{}],[10.0,{}],[10.0,{}],[10.0,{}]]
+
+    threadnum = len(threadlist)
+    for i in range(10):
+        flag = 0
+        for j in range(threadnum):#函数数量
+            if(threadlist[j].is_alive()==False):#如果某一进程结束
+                result[j]=threadlist[j].get_result()
+                flag += 1
+        if flag == threadnum:#全部结束
+            break
+        time.sleep(1)
+
+
+    [redistime,none] = result[0]#返回子进程的结果
+    [influxtime,none] = result[1]
+    [n4jtime,none] = result[2]
+    [alltime,movie] = result[3]
     limit = 0
     if len(movie.keys()) > 20000:
         limit = 500
@@ -72,7 +110,7 @@ def moviesearch():
     newmovie["redis"] = round(redistime,2)
     newmovie["influxdb"] = round(influxtime,2)
     newmovie["neo4j"] = round(n4jtime,2)
-    newmovie["zonghedb"] = endtime4 - endtime4
+    newmovie["zonghedb"] = round(alltime,2)
     moviejson = json.dumps(newmovie)
 
     return moviejson
@@ -85,32 +123,50 @@ def collaboration():
     print(actor,director)
     relationships1 = {}
     relationships = {}
+    threadlist = []
 
-    clp=Pool(4)
 
     begint = time.time()
-    redisproc = clp.apply_async(r.bsearch, args=(actor,director))
+    redisproc =MyThread(r.bsearch, args=(actor,director))
     #relationships1 = r.bsearch(actor,director)
-    endtime1 = time.time()
+    redisproc.start()
 
 
-    infxproc = clp.apply_async(infx.bsearch, args=(director,actor))
+    infxproc = MyThread(infx.bsearch, args=(director,actor))
     #infx.bsearch(director,actor)
-    endtime2 = time.time()
+    infxproc.start()
 
-    n4jproc = clp.apply_async(n4j.bsearch, args=(actor,director))
+    n4jproc = MyThread(n4j.bsearch, args=(actor,director))
     #n4j.bsearch(director,actor)
-    endtime3 = time.time()
+    n4jproc.start()
 
     #all.bsearch(director,actor)
-    endtime4 = time.time()
+    allproc = MyThread(all.bsearch, args=(actor,director))
+    allproc.start()
 
-    clp.close()
-    clp.join()  # 阻断主进程直到子进程执行完毕
 
-    [redistime,relationships1] = redisproc.get()#返回子进程的结果
-    [influxtime,none] = infxproc.get()
-    [n4jtime, none] = n4jproc.get()
+    threadlist.append(redisproc)
+    threadlist.append(infxproc)
+    threadlist.append(n4jproc)
+    threadlist.append(allproc)
+
+    result = [[10.0, {}], [10.0, {}], [10.0, {}], [10.0, {}]]
+
+    threadnum = len(threadlist)
+    for i in range(10):
+        flag = 0
+        for j in range(threadnum):  # 函数数量
+            if (threadlist[j].is_alive() == False):  # 如果某一进程结束
+                result[j] = threadlist[j].get_result()
+                flag += 1
+        if flag == threadnum:  # 全部结束
+            break
+        time.sleep(1)
+
+    [redistime,none] =result[0]#返回子进程的结果
+    [influxtime,none] = result[1]
+    [n4jtime, none] = result[2]
+    [alltime, relationships1] = result[3]
 
     limit = 0
     if len(relationships1.keys())>20000:
@@ -128,8 +184,8 @@ def collaboration():
     relationships["len"] = num
     relationships["redis"] = round(redistime,2)
     relationships["influxdb"] = round(influxtime,2)
-    relationships["neo4j"] = round(endtime3 - endtime2,2)
-    relationships["zonghedb"] = round(endtime4 - endtime3,2)
+    relationships["neo4j"] = round(n4jtime,2)
+    relationships["zonghedb"] = round(alltime,2)
     print(num)
     relationshipsjson = json.dumps(relationships)
 
