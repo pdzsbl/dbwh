@@ -80,6 +80,7 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
         newdic = {"length":len(newx)}
         num = 0
         for movie in newx:
+            movie["reviewnum"] = movie["review"]
             newdic[num] = movie
             num+=1
         return [time.time()-bgt,newdic]
@@ -263,4 +264,4 @@ def dividebymonth():
 """
 #dividebyyear()
 if __name__ == '__main__':
-    print(msearch(actor='Akira Kamiya', genre="Japanese"))
+    print(msearch(genre="Japanese"))
