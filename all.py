@@ -6,11 +6,11 @@ import GraphQuery as n4j
 def msearch(genre, begintime, endtime, moviename, actor, director):
     starttime = begintime
     if (starttime != ""):
-        startyear = starttime.split(" ")[3]
+        startyear = starttime.split(" ")[0]
     else:
         startyear = ""
     if (endtime != ""):
-        endyear = endtime.split(" ")[3]
+        endyear = endtime.split(" ")[0]
     else:
         endyear = ""
     #完成时间到年的转换

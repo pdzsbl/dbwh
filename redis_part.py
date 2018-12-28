@@ -148,7 +148,7 @@ def bsearch(actor, director):
                     else:
                         relation[key_actor] = {director: 1}
 
-
+        print("redis bs",relation)
         return [time.time()-bgt,relation]
     else: # Only Actor
         relation[actor] = {}

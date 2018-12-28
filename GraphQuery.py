@@ -3,7 +3,7 @@ import json
 import time
 
 # HTTP地址（看配置），用户名（默认neo4j），数据库登陆密码
-graph = Graph('http://localhost:11002', username='neo4j', password='15954031572')
+graph = Graph('http://localhost:7474', username='neo4j', password='123')
 
 
 def msearch(genre, begintime, endtime, moviename, director, actor):
@@ -109,6 +109,7 @@ def bsearch(actor, director):
             jsonDict[i['a']['name']] = i['n']
         jsonDictA = dict()
         jsonDictA[director] = jsonDict
+        print(jsonDictA)
         return [time.time() - beginTime, json.dumps(jsonDictA)]
     if (actor != '') & (director != ''):
         if len(dataList) == 0:
@@ -141,7 +142,8 @@ print(bsearch('Wayne Tippit', 'Bille August'))
 print(bsearch('', ''))
 '''
 
-'''
-执行时间看筛选条件 几秒到几千秒不等
-print(msearch("", "2007", "2009", "", "", ""))
-'''
+if __name__ == '__main__':
+    print(bsearch('Scott Baio', ''))
+    print(bsearch('', 'Bruce Seth Green'))
+    print(bsearch('Richard Jordan', 'Bille August'))
+    print(bsearch('Wayne Tippit', 'Bille August'))

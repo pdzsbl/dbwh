@@ -35,18 +35,15 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
     client = idb.InfluxDBClient('localhost', 8086, 'root', 'root', 'dbwh')
     qstr = "select * from dbwarehouse where "
     if(begintime != "" and endtime != ""):
-        begintime = datedeal(begintime)
-        endtime = datedeal(endtime)
         qstr+= "time >= '"+begintime+"' and time <= '"+endtime+"' and "
     if(genre != ""):
         qstr += "genre = '"+genre+"' and "
     if(title != ""):
-        qstr += "title LIKE '%" + title + "%' and "
+        qstr += "title = '" + title + "' and "
     qstr += "review != '-1' tz('Asia/Shanghai');"
     #print(qstr)
     result = client.query(qstr)
 
-    print("influx result",begintime,endtime,actor,director,genre,title)
     for i in result:
         new = []
         if (actor == ""):
@@ -83,7 +80,9 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
             movie["reviewnum"] = movie["review"]
             newdic[num] = movie
             num+=1
+        # print("inf res",[time.time()-bgt,newdic])
         return [time.time()-bgt,newdic]
+    return [time.time()-bgt,{}]
 
 
 def bsearch(actor="", director=""):
@@ -135,7 +134,7 @@ def bsearch(actor="", director=""):
             dict = {}
             for every in new:
                 for everydire in every["director"]:
-                    if(dict.has_key(everydire)==True):
+                    if everydire in dict:
                         dict[everydire]+=1
                     else:
                         dict[everydire]=1
@@ -169,7 +168,7 @@ def bsearch(actor="", director=""):
             dict = {}
             for every in new:
                 for everyactor in every["actor"]:
-                    if (dict.has_key(everyactor) == True):
+                    if everyactor in dict:
                         dict[everyactor] += 1
                     else:
                         dict[everyactor] = 1
