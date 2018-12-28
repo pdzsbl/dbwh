@@ -126,7 +126,7 @@ def bsearch(actor, director):
             jsonDictA[i['a']['name']] = dict()
         for i in dataList:
             jsonDictA[i['a']['name']][i['d']['name']] = i['n']
-        return [time.time() - beginTime, json.dumps(jsonDictA)]
+        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
 
 
 '''

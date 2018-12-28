@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2bd95c1-ff85-4f5f-9e5e-f1f8151b98fc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/flasktest.py" afterPath="$PROJECT_DIR$/flasktest.py" />
-      <change beforePath="$PROJECT_DIR$/influ.py" afterPath="$PROJECT_DIR$/influ.py" />
-      <change beforePath="$PROJECT_DIR$/unittest.py" afterPath="$PROJECT_DIR$/unittest.py" />
+      <change beforePath="$PROJECT_DIR$/GraphQuery.py" afterPath="$PROJECT_DIR$/GraphQuery.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,18 +23,18 @@
       <file leaf-file-name="genres_parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/genres_parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="360">
+              <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="flasktest.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="flasktest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/flasktest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="76" column="19" lean-forward="false" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
+            <state relative-caret-position="-615">
+              <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -48,7 +45,7 @@
       <file leaf-file-name="all.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/all.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
+            <state relative-caret-position="510">
               <caret line="34" column="37" lean-forward="false" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -60,8 +57,8 @@
       <file leaf-file-name="GraphQuery.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GraphQuery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+            <state relative-caret-position="393">
+              <caret line="126" column="26" lean-forward="true" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -72,7 +69,7 @@
       <file leaf-file-name="redis_part.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/redis_part.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="31">
+            <state relative-caret-position="1350">
               <caret line="90" column="28" lean-forward="false" selection-start-line="90" selection-start-column="28" selection-end-line="90" selection-end-column="28" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -84,24 +81,11 @@
       <file leaf-file-name="influ.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/influ.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
+            <state relative-caret-position="1230">
               <caret line="82" column="46" lean-forward="false" selection-start-line="82" selection-start-column="46" selection-end-line="82" selection-end-column="46" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-                <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-                <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="unittest.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/unittest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -136,10 +120,10 @@
         <option value="$PROJECT_DIR$/all.py" />
         <option value="$PROJECT_DIR$/genres_parser.py" />
         <option value="$PROJECT_DIR$/flasktest.py" />
-        <option value="$PROJECT_DIR$/GraphQuery.py" />
         <option value="$PROJECT_DIR$/redis_part.py" />
         <option value="$PROJECT_DIR$/influ.py" />
         <option value="$PROJECT_DIR$/unittest.py" />
+        <option value="$PROJECT_DIR$/GraphQuery.py" />
       </list>
     </option>
   </component>
@@ -170,7 +154,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -182,6 +165,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -346,7 +330,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32765958" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32765958" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27821317" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -414,21 +398,11 @@
           <caret line="256" column="17" lean-forward="false" selection-start-line="265" selection-start-column="47" selection-end-line="265" selection-end-column="55" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="29" column="4" lean-forward="true" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/unittest.py" />
     <entry file="file://$PROJECT_DIR$/flasktest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2805">
@@ -483,21 +457,11 @@
           <caret line="256" column="17" lean-forward="false" selection-start-line="265" selection-start-column="47" selection-end-line="265" selection-end-column="55" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/unittest.py" />
     <entry file="file://$PROJECT_DIR$/all.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -552,28 +516,15 @@
           <caret line="256" column="17" lean-forward="true" selection-start-line="265" selection-start-column="47" selection-end-line="265" selection-end-column="55" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/unittest.py" />
     <entry file="file://$PROJECT_DIR$/multithread.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -611,9 +562,6 @@
           <caret line="261" column="3" lean-forward="false" selection-start-line="261" selection-start-column="3" selection-end-line="261" selection-end-column="3" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
@@ -622,9 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -662,9 +607,6 @@
           <caret line="261" column="3" lean-forward="false" selection-start-line="261" selection-start-column="3" selection-end-line="261" selection-end-column="3" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
@@ -673,9 +615,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="40" lean-forward="false" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -713,9 +652,6 @@
           <caret line="261" column="3" lean-forward="false" selection-start-line="261" selection-start-column="3" selection-end-line="261" selection-end-column="3" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
@@ -801,29 +737,9 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/influxdb/client.py" />
-    <entry file="file://$PROJECT_DIR$/all.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="34" column="37" lean-forward="false" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GraphQuery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/redis_part.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
+        <state relative-caret-position="1350">
           <caret line="90" column="28" lean-forward="false" selection-start-line="90" selection-start-column="28" selection-end-line="90" selection-end-column="28" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -835,48 +751,55 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="24" lean-forward="false" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/influ.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="1230">
           <caret line="82" column="46" lean-forward="false" selection-start-line="82" selection-start-column="46" selection-end-line="82" selection-end-column="46" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1545991206000" expanded="true" signature="1178:1209" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="2970:2995" ph="select * fro... dbwarehouse" />
-            <marker date="1545991206000" expanded="true" signature="8038:8180" ph="select count... dbwarehouse" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/genres_parser.py">
+    <entry file="file://$PROJECT_DIR$/unittest.py" />
+    <entry file="file://$PROJECT_DIR$/all.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flasktest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="19" lean-forward="false" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
+        <state relative-caret-position="510">
+          <caret line="34" column="37" lean-forward="false" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittest.py">
+    <entry file="file://$PROJECT_DIR$/GraphQuery.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="393">
+          <caret line="126" column="26" lean-forward="true" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/genres_parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="26" lean-forward="true" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flasktest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-615">
+          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
