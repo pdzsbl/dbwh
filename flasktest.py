@@ -232,13 +232,21 @@ def diagram():
     finaljson = {}
     diagramdata = []
     diagramlabels = []
-    diagramgenredic = gp.genres_parser()
+    monthlabels = []
+    monthdata = []
+    (diagramgenredic, month_result) = gp.genres_parser()
     for genre in diagramgenredic.keys():
         diagramdata.append(diagramgenredic[genre])
         diagramlabels.append(genre)
 
+    for month in month_result.keys():
+        monthlabels.append(month)
+        monthdata.append(month_result[month])
+
     finaljson["diagramlabels"] = diagramlabels
     finaljson["diagramdata"] = diagramdata
+    finaljson['monthdata'] = monthdata
+    finaljson['monthlabels'] = monthlabels
 
     chart2=infx.dividebyyear()
     chart2data=[]

@@ -30,8 +30,9 @@ def genres_parser():
             final_result['others'] += result[key]
         else:
             final_result[key] = result[key]
-    print(len(final_result.keys()))
-    return result # , month
+
+    return final_result, month
 
 if __name__ == '__main__':
-    genres_parser()
+    (genre, month) = genres_parser()
+    print(month)
