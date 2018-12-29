@@ -98,35 +98,35 @@ def bsearch(actor, director):
     dataList = eval(dataFrame.to_json(orient='records'))
     jsonDict = dict()
     # 演员跟导演的合作关系
-    if (actor != '') & (director == ''):
-        for i in dataList:
-            jsonDict[i['d']['name']] = i['n']
-        jsonDictA = dict()
-        jsonDictA[actor] = jsonDict
-        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
-    if (director != '') & (actor == ''):
-        for i in dataList:
-            jsonDict[i['a']['name']] = i['n']
-        jsonDictA = dict()
-        jsonDictA[director] = jsonDict
-        print(jsonDictA)
-        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
-    if (actor != '') & (director != ''):
-        if len(dataList) == 0:
-            jsonDict[director] = 0
-        else:
-            for i in dataList:
-                jsonDict[i['d']['name']] = i['n']
-        jsonDictA = dict()
-        jsonDictA[actor] = jsonDict
-        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
-    if (actor == '') & (director == ''):
-        jsonDictA = dict()
-        for i in dataList:
-            jsonDictA[i['a']['name']] = dict()
-        for i in dataList:
-            jsonDictA[i['a']['name']][i['d']['name']] = i['n']
-        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
+    # if (actor != '') & (director == ''):
+    #     for i in dataList:
+    #         jsonDict[i['d']['name']] = i['n']
+    #     jsonDictA = dict()
+    #     jsonDictA[actor] = jsonDict
+    #     return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
+    # if (director != '') & (actor == ''):
+    #     for i in dataList:
+    #         jsonDict[i['a']['name']] = i['n']
+    #     jsonDictA = dict()
+    #     jsonDictA[director] = jsonDict
+    #     print(jsonDictA)
+    #     return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
+    # if (actor != '') & (director != ''):
+    #     if len(dataList) == 0:
+    #         jsonDict[director] = 0
+    #     else:
+    #         for i in dataList:
+    #             jsonDict[i['d']['name']] = i['n']
+    #     jsonDictA = dict()
+    #     jsonDictA[actor] = jsonDict
+    #     return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
+    # if (actor == '') & (director == ''):
+    jsonDictA = dict()
+    for i in dataList:
+        jsonDictA[i['a']['name']] = dict()
+    for i in dataList:
+        jsonDictA[i['a']['name']][i['d']['name']] = i['n']
+    return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
 
 
 '''
