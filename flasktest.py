@@ -80,10 +80,10 @@ def moviesearch():
     threadlist.append(n4jproc)
     # threadlist.append(allproc)
 
-    result=[[5.0,{}],[5.0,{}],[5.0,{}],[5.0,{}]]
+    result=[[10.0,{}],[10.0,{}],[10.0,{}],[10.0,{}]]
 
     threadnum = len(threadlist)
-    for i in range(5):
+    for i in range(10):
         flag = 0
         for j in range(threadnum):#函数数量
             if(threadlist[j].is_alive()==False):#如果某一进程结束
