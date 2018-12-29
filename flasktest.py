@@ -191,11 +191,11 @@ def collaboration():
         influxtime = result[1][0]
  
     if result[2][1]!={}:
-        [n4jtime,movie] = result[2]#返回子进程的结果
+        [n4jtime,relationships1] = result[2]#返回子进程的结果
     else:
         n4jtime = result[2][0]
     # if result[3][1]!={}:
-    #     [alltime,movie] = result[3]#返回子进程的结果
+    #     [alltime,relationships1] = result[3]#返回子进程的结果
     # else:
     #     alltime = result[3][0]
 
@@ -220,7 +220,7 @@ def collaboration():
     relationships["len"] = num
     relationships["redis"] = round(redistime,2)
     relationships["influxdb"] = round(influxtime,2)
-    # relationships["neo4j"] = round(n4jtime,2)
+    relationships["neo4j"] = round(n4jtime,2)
     # relationships["zonghedb"] = round(alltime,2)
     print(num)
     relationshipsjson = json.dumps(relationships)

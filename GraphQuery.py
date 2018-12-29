@@ -3,14 +3,14 @@ import json
 import time
 
 # HTTP地址（看配置），用户名（默认neo4j），数据库登陆密码
-graph = Graph('http://localhost:7474', username='neo4j', password='123')
+graph = Graph('http://localhost:7474', username='neo4j', password='12345')
 
 
 def msearch(genre, begintime, endtime, moviename, director, actor):
     global graph
     beginTime = time.time()
 
-    matchStart = 'match (m:Movie),(a:Actor),(d:Director) where (m)-[:ACT]->(a) and (d)-[:DIRECT]->(m) '
+    matchStart = 'match (m:Movie),(a:Actor),(d:Director) where (a)-[:ACT]->(m) and (m)-[:DIRECT]->(d) '
     matchEnd = ' return m,a,d'
     matchCond = ''
 
@@ -64,14 +64,14 @@ def msearch(genre, begintime, endtime, moviename, director, actor):
             k += 1
     jsonDictA['length'] = k - 1
 
-    return [time.time() - beginTime, json.dumps(jsonDictA)]
+    return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
 
 
 def bsearch(actor, director):
     global graph
     beginTime = time.time()
 
-    matchStart = "match (a:Actor),(d:Director),p=allshortestpaths((d)-[*..10]->(a)) "
+    matchStart = "match (a:Actor),(d:Director),p=allshortestpaths((a)-[*..10]->(d)) "
     matchEnd = " return a,d,count(p)"
     matchString = ""
 
@@ -103,14 +103,14 @@ def bsearch(actor, director):
             jsonDict[i['d']['name']] = i['n']
         jsonDictA = dict()
         jsonDictA[actor] = jsonDict
-        return [time.time() - beginTime, json.dumps(jsonDictA)]
+        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
     if (director != '') & (actor == ''):
         for i in dataList:
             jsonDict[i['a']['name']] = i['n']
         jsonDictA = dict()
         jsonDictA[director] = jsonDict
         print(jsonDictA)
-        return [time.time() - beginTime, json.dumps(jsonDictA)]
+        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
     if (actor != '') & (director != ''):
         if len(dataList) == 0:
             jsonDict[director] = 0
@@ -119,7 +119,7 @@ def bsearch(actor, director):
                 jsonDict[i['d']['name']] = i['n']
         jsonDictA = dict()
         jsonDictA[actor] = jsonDict
-        return [time.time() - beginTime, json.dumps(jsonDictA)]
+        return [time.time() - beginTime, eval(json.dumps(jsonDictA))]
     if (actor == '') & (director == ''):
         jsonDictA = dict()
         for i in dataList:
