@@ -39,11 +39,7 @@ def msearch(begintime="",endtime="",actor="",director="",genre="",title="",revie
     if(genre != ""):
         qstr += "genre = '"+genre+"' and "
     if(title != ""):
-        qstr += "title ~= /*" + title + "*/ and "
-    if(actor != ""):
-        qstr += "actor ~= /*" + actor + "*/ and "
-    if(director != ""):
-        qstr += "director ~= /*" + director +"*/ and "
+        qstr += "title =  '" + title + "' and "
     qstr += "review != '-1' tz('Asia/Shanghai');"
     #print(qstr)
     result = client.query(qstr)
@@ -267,4 +263,4 @@ def dividebymonth():
 """
 #dividebyyear()
 if __name__ == '__main__':
-    print(msearch(genre="Japanese"))
+    print(msearch(title="king"))
